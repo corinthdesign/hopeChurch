@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
     // Use dynamic import for node-fetch
     const fetch = (await import('node-fetch')).default;
 
-    const response = await fetch('https://www.example.com/.netlify/functions/getStreams'); // Replace with your Netlify Function URL
+    const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams'); // Replace with your Netlify Function URL
     const data = await response.json();
 
     if (response.ok) {
