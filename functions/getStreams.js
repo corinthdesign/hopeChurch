@@ -1,8 +1,4 @@
 
-Certainly! Here's the modified getStreams.js file with the updated fetch import:
-
-javascript
-Copy code
 // getStreams.js
 
 exports.handler = async function(event, context) {
