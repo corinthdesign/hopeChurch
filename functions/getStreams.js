@@ -1,54 +1,26 @@
-// functions/getStreams.js
+const fetch = require('node-fetch');
 
-const { google } = require('googleapis');
-
-const API_KEY = 'AIzaSyCHS4L8HmcPQYwOcGFZrWAqlUrBQKt7b3E';
-const CHANNEL_ID = 'UC5dIymK_x_NSNdqE7P5FETQ';
-
-const youtube = google.youtube({
-  version: 'v3',
-  auth: API_KEY,
-});
-
-exports.handler = async function(event, context) {
+async function fetchLiveStreams() {
   try {
-    const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
+    const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams');
+    const data = await response.json();
 
-    if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://www.youtube.com/watch?v=XArss6ebXjY';
-      const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ updatedUrl: newUrl, upcomingStreams }),
-      };
+    if (response.ok) {
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `<p>Updated URL: ${data.updatedUrl}</p>`;
+      
+      if (data.upcomingStreams.length > 0) {
+        outputDiv.innerHTML += `<p>Upcoming Stream ID: ${data.upcomingStreams[0]}</p>`;
+      } else {
+        outputDiv.innerHTML += '<p>No upcoming streams found.</p>';
+      }
     } else {
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'No upcoming streams found.' }),
-      };
+      console.error('Error:', data.error);
     }
   } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
-    };
+    console.error('Error:', error.message);
   }
-};
-
-async function getUpcomingStreams(channelId) {
-  const response = await youtube.search.list({
-    part: 'id',
-    channelId: channelId,
-    eventType: 'upcoming',
-    type: 'video',
-  });
-
-  const upcomingStreams = response.data.items.map(item => item.id.videoId);
-  return upcomingStreams;
 }
 
-function replaceVideoId(url, newVideoId) {
-  const parsedUrl = new URL(url);
-  parsedUrl.searchParams.set('v', newVideoId);
-  return parsedUrl.toString();
-}
+// Fetch live streams when the page loads
+fetchLiveStreams();
