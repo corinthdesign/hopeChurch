@@ -1,6 +1,5 @@
 
-
-// getStreams.js
+        // getStreams.js
 
 exports.handler = async function(event, context) {
   try {
