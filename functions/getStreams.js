@@ -1,4 +1,4 @@
-const fetch = import('node-fetch').default;
+const fetch = import('node-fetch');
 
 async function fetchLiveStreams() {
   try {
