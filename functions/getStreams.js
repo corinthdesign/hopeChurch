@@ -19,7 +19,7 @@ exports.handler = async function(event, context) {
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
       return {
         statusCode: 200,
-        body: JSON.stringify({ updatedUrl: newUrl, upcomingStreams }),
+        body: JSON.stringify(response.data),
       };
     } else {
       return {
