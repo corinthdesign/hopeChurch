@@ -2,8 +2,8 @@
 
 const { google } = require('googleapis');
 
-const API_KEY = 'YOUR_API_KEY';
-const CHANNEL_ID = 'TARGET_CHANNEL_ID';
+const API_KEY = 'AIzaSyCHS4L8HmcPQYwOcGFZrWAqlUrBQKt7b3E';
+const CHANNEL_ID = 'UC5dIymK_x_NSNdqE7P5FETQ';
 
 const youtube = google.youtube({
   version: 'v3',
@@ -15,7 +15,7 @@ exports.handler = async function(event, context) {
     const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
 
     if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://www.youtube.com/watch?v=ORIGINAL_VIDEO_ID';
+      const originalUrl = 'https://www.youtube.com/watch?v=XArss6ebXjY';
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
       return {
         statusCode: 200,
