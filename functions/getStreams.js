@@ -15,13 +15,37 @@ const youtube = google.youtube({
 
 exports.handler = async function(event, context) {
   try {
-    // Your existing logic to fetch data
-    const data = {
-      updatedUrl: 'https://www.youtube.com/watch?v=UpdatedVideoID',
-      upcomingStreams: ['UpcomingStreamID1', 'UpcomingStreamID2'],
-    };
+    const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
 
-    // CORS headers
+    if (upcomingStreams.length > 0) {
+      const originalUrl = 'https://www.youtube.com/watch?v=XArss6ebXjY';
+      const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
+
+      const headers = {
+        'Access-Control-Allow-Origin': '*', // or specify the origin of your website
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+      };
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ updatedUrl: newUrl, upcomingStreams }),
+      };
+    } else {
+      const headers = {
+        'Access-Control-Allow-Origin': '*', // or specify the origin of your website
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+      };
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ message: 'No upcoming streams found.' }),
+      };
+    }
+  } catch (error) {
     const headers = {
       'Access-Control-Allow-Origin': '*', // or specify the origin of your website
       'Access-Control-Allow-Headers': 'Content-Type',
@@ -29,14 +53,9 @@ exports.handler = async function(event, context) {
     };
 
     return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ updatedUrl: data.updatedUrl, upcomingStreams: data.upcomingStreams }),
-    };
-  } catch (error) {
-    return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message || 'Internal server error' }),
+      headers,
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
