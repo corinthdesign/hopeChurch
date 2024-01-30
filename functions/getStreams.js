@@ -1,3 +1,14 @@
+const headers = {
+  'Access-Control-Allow-Origin': '*',  // Replace with your frontend origin if possible
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+return {
+  statusCode: 200,
+  headers,
+  body: JSON.stringify({ updatedUrl: data.updatedUrl, upcomingStreams: data.upcomingStreams }),
+};
+
 
 // functions/getStreams.js
 
