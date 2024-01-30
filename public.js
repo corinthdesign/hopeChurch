@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await fetchData();
     
     // Update your HTML with the data
-    document.getElementById('output').innerHTML = `<p>Updated URL: ${data.updatedUrl}</p>`;
+    document.getElementById('output').innerHTML = `<p>Updated URL: ${data.updatedUrl}</p> <iframe width="560" height="315" src="${data.updatedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
     
     if (data.upcomingStreams.length > 0) {
       document.getElementById('output').innerHTML += `<p>Upcoming Stream ID: ${data.upcomingStreams[0]}</p>`;
