@@ -15,34 +15,28 @@ const youtube = google.youtube({
 
 exports.handler = async function(event, context) {
   try {
-    const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
+    // Your existing logic to fetch data
+    const data = {
+      updatedUrl: 'https://www.youtube.com/watch?v=UpdatedVideoID',
+      upcomingStreams: ['UpcomingStreamID1', 'UpcomingStreamID2'],
+    };
 
-        // CORS headers
-        const headers = {
-          'Access-Control-Allow-Origin': '*', // Replace with your frontend origin if possible
-          'Access-Control-Allow-Headers': 'Content-Type',
-        };
+    // CORS headers
+    const headers = {
+      'Access-Control-Allow-Origin': '*', // or specify the origin of your website
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'application/json',
+    };
 
-
-    if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://youtube.com/live/XArss6ebXjY';
-      const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
-      console.log(newUrl);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ updatedUrl: newUrl, upcomingStreams }),
-      };
-
-    } else {
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'No upcoming streams found.' }),
-      };
-    }
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ updatedUrl: data.updatedUrl, upcomingStreams: data.upcomingStreams }),
+    };
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: error.message || 'Internal server error' }),
     };
   }
 };
