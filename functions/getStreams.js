@@ -23,6 +23,7 @@ exports.handler = async function(event, context) {
           'Access-Control-Allow-Headers': 'Content-Type',
         };
 
+
     if (upcomingStreams.length > 0) {
       const originalUrl = 'https://youtube.com/live/XArss6ebXjY';
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
