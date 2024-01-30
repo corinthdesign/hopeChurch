@@ -3,7 +3,7 @@
 // Function to fetch data from the Netlify Function
 async function fetchData() {
   try {
-    const response = await fetch('https://your-netlify-app.netlify.app/.netlify/functions/getStreams');
+    const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams');
     const data = await response.json();
     
     if (response.ok) {
