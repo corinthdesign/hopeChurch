@@ -27,6 +27,7 @@ exports.handler = async function(event, context) {
     if (upcomingStreams.length > 0) {
       const originalUrl = 'https://youtube.com/live/XArss6ebXjY';
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
+      console.log(newUrl);
       return {
         statusCode: 200,
         body: JSON.stringify({ updatedUrl: newUrl, upcomingStreams }),
