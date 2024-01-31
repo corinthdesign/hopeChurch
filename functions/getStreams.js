@@ -18,7 +18,7 @@ exports.handler = async function(event, context) {
     const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
 
     if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://www.youtube.com/watch?v=XArss6ebXjY';
+      const originalUrl = 'https://www.youtube.com/embed/XArss6ebXjY';
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
 
       const headers = {
