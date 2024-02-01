@@ -20,7 +20,7 @@ async function updateDataPeriodically() {
     const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
 
     if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://www.youtube.com/embed/ORIGINAL_VIDEO_ID';
+      const originalUrl = 'https://www.youtube.com/embed/lzGHcHrHLb0';
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
 
       const updatedData = { updatedUrl: newUrl, upcomingStreams };
@@ -49,7 +49,7 @@ async function getStoredData() {
 }
 
 // Trigger the data update every day at a specific time (e.g., 3 AM UTC)
-const updateInterval = 8 * 60 * 60 * 1000; // 8 hours
+const updateInterval = 3 * 60 * 60 * 1000; // 8 hours
 setInterval(updateDataPeriodically, updateInterval);
 updateDataPeriodically(); // Initial update on server start
 
