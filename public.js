@@ -1,6 +1,5 @@
 // public.js
 
-// Function to fetch data from the Netlify Function
 const fetchData = async () => {
   try {
     const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams');
@@ -19,31 +18,16 @@ const fetchData = async () => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const data = await fetchData();
-
-    const headers = {
-      'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Content-Type': 'application/json',
-    };
-    
-    // Update your HTML with the data
-    document.getElementById('output').innerHTML = `<p>Updated URL: ${data.updatedUrl}</p> <iframe width="560" height="315" src="${data.updatedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-    
-    if (data.upcomingStreams.length > 0) {
-      document.getElementById('output').innerHTML += `<p>Upcoming Stream ID: ${data.upcomingStreams[0]}</p>`;
-    } else {
-
-      const headers = {
-        'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-      };
-      document.getElementById('output').innerHTML += '<p>No upcoming streams found.</p>';
-    }
-  } catch (error) {
-    console.error('Error:', error.message);
+const updateUI = (data) => {
+  // Update the UI based on the fetched data
+  const iframe = document.getElementById('youtube-iframe');
+  
+  if (data.updatedUrl) {
+    iframe.src = data.updatedUrl;
+  } else {
+    console.error('No updated URL in the fetched data.');
   }
-});
+};
+
+// Trigger data fetching when the page loads
+document.addEventListener('DOMContentLoaded', fetchData);

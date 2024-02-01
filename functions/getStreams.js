@@ -1,14 +1,12 @@
-
-
-
 // functions/getStreams.js
+
 const fs = require('fs').promises;
 const path = require('path');
 const { google } = require('googleapis');
 
 const API_KEY = 'AIzaSyCHS4L8HmcPQYwOcGFZrWAqlUrBQKt7b3E';
 const CHANNEL_ID = 'UC5dIymK_x_NSNdqE7P5FETQ';
-const DATA_FILE_PATH = path.join(__dirname, '../functions/data.json');
+const DATA_FILE_PATH = path.join(__dirname, 'data.json');
 
 const youtube = google.youtube({
   version: 'v3',
@@ -20,7 +18,7 @@ async function updateDataPeriodically() {
     const upcomingStreams = await getUpcomingStreams(CHANNEL_ID);
 
     if (upcomingStreams.length > 0) {
-      const originalUrl = 'https://www.youtube.com/embed/lzGHcHrHLb0';
+      const originalUrl = 'https://www.youtube.com/embed/lzGHcHrHLb0'; // Replace with your original video ID
       const newUrl = replaceVideoId(originalUrl, upcomingStreams[0]);
 
       const updatedData = { updatedUrl: newUrl, upcomingStreams };
@@ -48,8 +46,14 @@ async function getStoredData() {
   }
 }
 
+function replaceVideoId(url, newVideoId) {
+  const parsedUrl = new URL(url);
+  parsedUrl.searchParams.set('v', newVideoId);
+  return parsedUrl.toString();
+}
+
 // Trigger the data update every day at a specific time (e.g., 3 AM UTC)
-const updateInterval = 3 * 60 * 60 * 1000; // 8 hours
+const updateInterval = 24 * 60 * 60 * 1000; // 24 hours
 setInterval(updateDataPeriodically, updateInterval);
 updateDataPeriodically(); // Initial update on server start
 
@@ -70,16 +74,16 @@ exports.handler = async function (event, context) {
       body: JSON.stringify(storedData),
     };
   } else {
+    const headers = {
+      'Access-Control-Allow-Origin': '*', // or specify the origin of your website
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'application/json',
+    };
+
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: 'Error retrieving stored data.' }),
     };
   }
-} catch (error) {
-  return {
-    statusCode: 500,
-    body: JSON.stringify({ error: error.message }),
-  };
-}
-};
 };
