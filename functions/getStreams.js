@@ -6,7 +6,7 @@ const { google } = require('googleapis');
 
 const API_KEY = 'AIzaSyCHS4L8HmcPQYwOcGFZrWAqlUrBQKt7b3E';
 const CHANNEL_ID = 'UC5dIymK_x_NSNdqE7P5FETQ';
-const DATA_FILE_PATH = path.join(__dirname, 'data.json');
+const DATA_FILE_PATH = path.join(__dirname, '../data.json');
 
 const youtube = google.youtube({
   version: 'v3',
