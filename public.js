@@ -1,20 +1,24 @@
 // public.js
 
 // Function to fetch data from the Netlify Function
-async function fetchData() {
+const fetchData = async () => {
   try {
-    const response = await fetch('https://joyful-custard-ec7795.netlify.app/data.json');
-    const data = await response.json();
+    // Fetch data from the Netlify Function
+    const response = await fetch('https://your-netlify-site-name.netlify.app/data.json');
     
     if (response.ok) {
-      return data;
+      const data = await response.json();
+      console.log('Fetched Data:', data);
+
+      // Use the data as needed (e.g., update the HTML with the embedded video)
+      updateUI(data);
     } else {
-      throw new Error(data.error || 'Failed to fetch data');
+      console.error('Error fetching data:', response.statusText);
     }
   } catch (error) {
-    throw new Error('Failed to fetch data');
+    console.error('Error fetching data:', error.message);
   }
-}
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
