@@ -3,38 +3,18 @@
 // Function to fetch data from the Netlify Function
 const fetchData = async () => {
   try {
-    // Fetch data from the Netlify Function
-    const response = await fetch('https://your-netlify-site-name.netlify.app/data.json');
-    
+    const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams');
+
     if (response.ok) {
-      const headers = {
-        'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-      };
-      
       const data = await response.json();
       console.log('Fetched Data:', data);
 
       // Use the data as needed (e.g., update the HTML with the embedded video)
       updateUI(data);
     } else {
-
-      const headers = {
-        'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-      };
-
       console.error('Error fetching data:', response.statusText);
     }
   } catch (error) {
-
-    const headers = {
-      'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Content-Type': 'application/json',
-    };
     console.error('Error fetching data:', error.message);
   }
 };

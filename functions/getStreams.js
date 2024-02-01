@@ -70,16 +70,16 @@ exports.handler = async function (event, context) {
       body: JSON.stringify(storedData),
     };
   } else {
-    const headers = {
-      'Access-Control-Allow-Origin': '*', // or specify the origin of your website
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Content-Type': 'application/json',
-    };
-
     return {
       statusCode: 500,
-      headers,
       body: JSON.stringify({ error: 'Error retrieving stored data.' }),
     };
   }
+} catch (error) {
+  return {
+    statusCode: 500,
+    body: JSON.stringify({ error: error.message }),
+  };
+}
+};
 };
