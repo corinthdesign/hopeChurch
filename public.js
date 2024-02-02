@@ -2,7 +2,7 @@
 
 const fetchData = async () => {
   try {
-    const response = await fetch('https://joyful-custard-ec7795.netlify.app/.netlify/functions/getStreams');
+    const response = await fetch('https://joyful-custard-ec7795.netlify.app/data.json');
 
     if (response.ok) {
       const data = await response.json();

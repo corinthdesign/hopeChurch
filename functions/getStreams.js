@@ -37,6 +37,14 @@ async function updateDataPeriodically() {
 
 async function getStoredData() {
   try {
+    // Check if the file exists before reading
+    const fileExists = await fs.access(DATA_FILE_PATH).then(() => true).catch(() => false);
+
+    if (!fileExists) {
+      console.error('Error: data.json file not found.');
+      return null;
+    }
+
     // Read the stored data from the JSON file
     const data = await fs.readFile(DATA_FILE_PATH, 'utf8');
     return JSON.parse(data);
