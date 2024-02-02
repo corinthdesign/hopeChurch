@@ -23,7 +23,7 @@ const updateUI = (data) => {
   const iframe = document.getElementById('youtube-iframe');
   
   if (data.updatedUrl) {
-    iframe.src = data.updatedUrl;
+    iframe.src = "https://www.youtube.com/embed/" + data.upcomingStreams[0];
   } else {
     console.error('No updated URL in the fetched data.');
   }
