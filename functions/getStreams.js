@@ -61,7 +61,7 @@ function replaceVideoId(url, newVideoId) {
 }
 
 // Trigger the data update every day at a specific time (e.g., 3 AM UTC)
-const updateInterval = 24 * 60 * 60 * 1000; // 24 hours
+const updateInterval = 1 * 30 * 60 * 1000; // 24 hours
 setInterval(updateDataPeriodically, updateInterval);
 updateDataPeriodically(); // Initial update on server start
 
